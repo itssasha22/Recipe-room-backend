@@ -18,9 +18,13 @@ CORS(app)
 
 from routes.auth import auth_bp
 from routes.payments import payment_bp
+from routes.recipes import recipe_bp
+from routes.groups import group_bp
 
 app.register_blueprint(auth_bp, url_prefix='/api/auth')
 app.register_blueprint(payment_bp, url_prefix='/api/payments')
+app.register_blueprint(recipe_bp)  #  /api/recipes prefix
+app.register_blueprint(group_bp)   # /api/groups prefix
 
 if __name__ == '__main__':
     app.run(debug=True)
