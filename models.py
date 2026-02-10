@@ -29,20 +29,6 @@ class User(db.Model):
             'created_at': self.created_at.isoformat()
         }
 
-class Payment(db.Model):
-    __tablename__ = 'payments'
-    
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    amount = db.Column(db.Float, nullable=False)
-    currency = db.Column(db.String(3), default='USD')
-    payd_transaction_id = db.Column(db.String(255))
-    status = db.Column(db.String(20), default='pending')
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    
-    user = db.relationship('User', backref='payments')
-
-
 class Recipe(db.Model):
     __tablename__ = 'recipes'
     id = db.Column(db.Integer, primary_key=True)
@@ -54,7 +40,6 @@ class Recipe(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
-
 class Rating(db.Model):
     __tablename__ = 'ratings'
     id = db.Column(db.Integer, primary_key=True)
@@ -62,7 +47,6 @@ class Rating(db.Model):
     recipe_id = db.Column(db.Integer, db.ForeignKey('recipes.id'), nullable=False)
     value = db.Column(db.Integer, nullable=False)
     __table_args__ = (db.UniqueConstraint('user_id', 'recipe_id'),)
-
 
 class Bookmark(db.Model):
     __tablename__ = 'bookmarks'

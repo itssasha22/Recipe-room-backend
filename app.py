@@ -1,28 +1,31 @@
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
 from flask_jwt_extended import JWTManager
 from flask_cors import CORS
+from config import Config
 from dotenv import load_dotenv
-import os
+from models import db
 
 load_dotenv()
 
-app = Flask(__name__)
-app.config.from_object('config.Config')
+def create_app():
+    app = Flask(__name__)
+    app.config.from_object(Config)
+    
+    db.init_app(app)
+    jwt = JWTManager(app)
+    CORS(app)
+    
+    from routes.auth import auth_bp
+    from routes.search import search_bp
+    
+    app.register_blueprint(auth_bp, url_prefix='/api/auth')
+    app.register_blueprint(search_bp, url_prefix='/api')
+    
+    return app
 
-db = SQLAlchemy(app)
-migrate = Migrate(app, db)
-jwt = JWTManager(app)
-CORS(app)
-
-from routes.auth import auth_bp
-from routes.payments import payment_bp
-from routes.search import search_bp
-
-app.register_blueprint(auth_bp, url_prefix='/api/auth')
-app.register_blueprint(payment_bp, url_prefix='/api/payments')
-app.register_blueprint(search_bp, url_prefix='/api')
+app = create_app()
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    with app.app_context():
+        db.create_all()
+    app.run(debug=True, port=8000)
