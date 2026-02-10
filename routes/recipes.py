@@ -17,18 +17,66 @@ def get_recipe(recipe_id):
 
 @recipes_bp.route('/<int:recipe_id>/share-metadata', methods=['GET'])
 def get_share_metadata(recipe_id):
+    """Get rich metadata for social sharing (Open Graph, Twitter Cards)"""
     recipe = Recipe.query.get_or_404(recipe_id)
     
+    # Build sharing URL
+    sharing_url = f"{request.host_url}recipes/{recipe_id}"
+    
+    # Create description
+    description = recipe.description or f"Check out this {recipe.difficulty or 'delicious'} recipe!"
+    if len(description) > 200:
+        description = description[:197] + '...'
+    
+    # Build metadata for multiple platforms
     metadata = {
+        # Basic info
         'title': recipe.title,
-        'description': recipe.description or f"Check out this {recipe.difficulty or 'delicious'} recipe!",
+        'description': description,
         'image': recipe.image_url,
-        'url': f"{request.host_url}recipes/{recipe_id}",
+        'url': sharing_url,
         'type': 'recipe',
+        
+        # Recipe details
         'prep_time': recipe.prep_time,
         'cook_time': recipe.cook_time,
         'servings': recipe.servings,
-        'author': recipe.user.username if recipe.user else 'Anonymous'
+        'difficulty': recipe.difficulty,
+        'author': recipe.user.username if recipe.user else 'Anonymous',
+        
+        # Open Graph tags
+        'og': {
+            'og:title': recipe.title,
+            'og:description': description,
+            'og:image': recipe.image_url,
+            'og:url': sharing_url,
+            'og:type': 'article',
+            'og:site_name': 'Recipe Room',
+        },
+        
+        # Twitter Card tags
+        'twitter': {
+            'twitter:card': 'summary_large_image',
+            'twitter:title': recipe.title,
+            'twitter:description': description,
+            'twitter:image': recipe.image_url,
+        },
+        
+        # Structured data for sharing
+        'structured_data': {
+            '@context': 'https://schema.org',
+            '@type': 'Recipe',
+            'name': recipe.title,
+            'description': description,
+            'image': recipe.image_url,
+            'prepTime': f"PT{recipe.prep_time}M" if recipe.prep_time else None,
+            'cookTime': f"PT{recipe.cook_time}M" if recipe.cook_time else None,
+            'recipeYield': str(recipe.servings) if recipe.servings else None,
+            'author': {
+                '@type': 'Person',
+                'name': recipe.user.username if recipe.user else 'Anonymous'
+            }
+        }
     }
     
     return jsonify(metadata)
