@@ -12,8 +12,7 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 from sqlalchemy.exc import SQLAlchemyError
 from datetime import datetime
 
-from models import RecipeGroup, Recipe, User, group_memberships, recipe_group_members
-from database import db
+from models import db, RecipeGroup, Recipe, User, group_memberships, recipe_group_members
 from utils import upload_image_to_cloudinary, delete_image_from_cloudinary
 
 #setting up the blueprint

@@ -38,24 +38,6 @@ class User(db.Model):
             'created_at': self.created_at.isoformat()
         }
 
-class Recipe(db.Model):
-    __tablename__ = 'recipes'
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(200), nullable=False, index=True)
-    ingredients = db.Column(db.Text, nullable=False)
-    instructions = db.Column(db.Text, nullable=False)
-    people_served = db.Column(db.Integer)
-    country = db.Column(db.String(100), index=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    
-    user = db.relationship('User', backref='payments')
-
-
-# ============================================================================
-# RECIPE MODELS - Alex Maingi's Recipes CRUD & Group Recipes
-# ============================================================================
-
 # Association table: Recipe <-> RecipeGroup (which recipes belong to which groups)
 recipe_group_members = db.Table('recipe_group_members',
     db.Column('rgm_id', db.Integer, primary_key=True, autoincrement=True),

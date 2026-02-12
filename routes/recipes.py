@@ -13,8 +13,7 @@ from sqlalchemy.exc import SQLAlchemyError
 from datetime import datetime
 
 # Import models
-from models import Recipe, RecipeGroup, RecipeEditHistory, recipe_group_members, group_memberships
-from database import db
+from models import db, Recipe, RecipeGroup, RecipeEditHistory, recipe_group_members, group_memberships
 from utils import validate_recipe_data, upload_image_to_cloudinary, delete_image_from_cloudinary
 #setting up the blueprint
 recipe_bp = Blueprint('recipes', __name__, url_prefix='/api/recipes')
