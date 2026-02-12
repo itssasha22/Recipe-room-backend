@@ -33,7 +33,7 @@ end
 # Unset irrelevant variables.
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV /home/sasha/Documents/Recipe-room-backend/venv
+set -gx VIRTUAL_ENV /home/derrick-koome/Development/code/SE-prep/Phase5/Recipe-room-backend/venv
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/"bin $PATH

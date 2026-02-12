@@ -1,9 +1,8 @@
-from app import app, db
+from flask_sqlalchemy import SQLAlchemy
 
-def init_db():
+db = SQLAlchemy()
+
+def init_db(app):
     with app.app_context():
         db.create_all()
         print("Database tables created successfully!")
-
-if __name__ == '__main__':
-    init_db()

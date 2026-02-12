@@ -1,6 +1,7 @@
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
-from models import db, User
+from database import db
+from models import User
 import cloudinary.uploader
 
 auth_bp = Blueprint('auth', __name__)
@@ -33,7 +34,7 @@ def login():
         user = User.query.filter_by(email=data['email']).first()
         
         if user and user.check_password(data['password']):
-            access_token = create_access_token(identity=user.id)
+            access_token = create_access_token(identity=str(user.id))
             return jsonify({
                 'access_token': access_token,
                 'user': user.to_dict()
@@ -47,7 +48,7 @@ def login():
 @jwt_required()
 def get_profile():
     try:
-        user_id = get_jwt_identity()
+        user_id = int(get_jwt_identity())
         user = User.query.get(user_id)
         return jsonify(user.to_dict()), 200
     except Exception as e:
@@ -57,7 +58,7 @@ def get_profile():
 @jwt_required()
 def update_profile():
     try:
-        user_id = get_jwt_identity()
+        user_id = int(get_jwt_identity())
         user = User.query.get(user_id)
         data = request.get_json()
         
@@ -75,7 +76,7 @@ def update_profile():
 @jwt_required()
 def upload_profile_image():
     try:
-        user_id = get_jwt_identity()
+        user_id = int(get_jwt_identity())
         user = User.query.get(user_id)
         
         if 'image' not in request.files:
