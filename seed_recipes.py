@@ -11,7 +11,14 @@ def seed_recipes():
         db.session.commit()
         
         # Create users from different countries with authentic local names
+        # Featured Kenyan Chefs
         users_data = [
+            {'username': 'DerrickKoome', 'email': 'derrick.koome@flavorhub.com', 'country': 'Kenya', 'featured': True},
+            {'username': 'SashaLisha', 'email': 'sasha.lisha@flavorhub.com', 'country': 'Kenya', 'featured': True},
+            {'username': 'IanNassore', 'email': 'ian.nassore@flavorhub.com', 'country': 'Kenya', 'featured': True},
+            {'username': 'AlexMureti', 'email': 'alex.mureti@flavorhub.com', 'country': 'Kenya', 'featured': True},
+            {'username': 'JoyKori', 'email': 'joy.kori@flavorhub.com', 'country': 'Kenya', 'featured': True},
+            # Other Community Chefs
             {'username': 'WanjiruKamau', 'email': 'wanjiru@reciperoom.com', 'country': 'Kenya'},
             {'username': 'AbebeTesfaye', 'email': 'abebe@reciperoom.com', 'country': 'Ethiopia'},
             {'username': 'AdaoraOkafor', 'email': 'adaora@reciperoom.com', 'country': 'Nigeria'},
@@ -25,6 +32,7 @@ def seed_recipes():
         ]
         
         users = {}
+        featured_chefs = []
         for user_data in users_data:
             user = User(
                 username=user_data['username'],
@@ -33,8 +41,21 @@ def seed_recipes():
             )
             db.session.add(user)
             db.session.commit()
+            
+            # Store featured chefs separately
+            if user_data.get('featured'):
+                featured_chefs.append(user)
+            
+            # Store by country (keeps last user from each country for backward compatibility)
             users[user_data['country']] = user
             print(f"Created user: {user.username} from {user_data['country']}")
+        
+        # Store featured chefs by name for easy access
+        derrick = featured_chefs[0]
+        sasha = featured_chefs[1]
+        ian = featured_chefs[2]
+        alex = featured_chefs[3]
+        joy = featured_chefs[4]
         
         recipes_data = [
             # EAST AFRICAN RECIPES
@@ -75,7 +96,7 @@ Serve the ugali alongside the sukuma wiki with optional nyama choma (grilled mea
                 'servings': 4,
                 'country': 'Kenya',
                 'image_url': 'https://images.unsplash.com/photo-1604329760661-e71dc83f8f26?w=600',
-                'user_id': users['Kenya'].id
+                'user_id': derrick.id  # By Derrick Koome
             },
             {
                 'title': 'Pilau (Spiced Rice)',
@@ -117,7 +138,7 @@ Fresh coriander for garnish''',
                 'servings': 6,
                 'country': 'Kenya',
                 'image_url': 'https://images.unsplash.com/photo-1596797038530-2c107229654b?w=600',
-                'user_id': users['Kenya'].id
+                'user_id': alex.id  # By Alex Mureti
             },
             {
                 'title': 'Chapati (East African Flatbread)',
@@ -149,7 +170,7 @@ Extra oil for cooking''',
                 'servings': 8,
                 'country': 'Kenya',
                 'image_url': 'https://images.unsplash.com/photo-1626074353765-517a681e40be?w=600',
-                'user_id': users['Kenya'].id
+                'user_id': ian.id  # By Ian Nassore
             },
             {
                 'title': 'Nyama Choma (Grilled Meat)',
@@ -178,7 +199,7 @@ Juice of 2 lemons
                 'servings': 6,
                 'country': 'Kenya',
                 'image_url': 'https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?w=600',
-                'user_id': users['Kenya'].id
+                'user_id': sasha.id  # By Sasha Lisha
             },
             {
                 'title': 'Mandazi (East African Donuts)',
@@ -211,7 +232,7 @@ Oil for deep frying''',
                 'servings': 12,
                 'country': 'Kenya',
                 'image_url': 'https://images.unsplash.com/photo-1586985289688-ca3cf47d3e6e?w=600',
-                'user_id': users['Kenya'].id
+                'user_id': joy.id  # By Joy Kori
             },
             
             # ETHIOPIAN/EAST AFRICAN
