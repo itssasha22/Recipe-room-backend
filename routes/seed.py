@@ -9,6 +9,7 @@ seed_bp = Blueprint('seed', __name__)
 def seed_recipes():
     try:
         new_users = [
+            # New countries
             {'username': 'YukiTanaka', 'email': 'yuki@flavorhub.com', 'country': 'Japan'},
             {'username': 'PierreDubois', 'email': 'pierre@flavorhub.com', 'country': 'France'},
             {'username': 'MariaSantos', 'email': 'maria@flavorhub.com', 'country': 'Brazil'},
@@ -24,6 +25,17 @@ def seed_recipes():
             {'username': 'KofiMensah', 'email': 'kofi@flavorhub.com', 'country': 'Ivory Coast'},
             {'username': 'AnastasiaVolkov', 'email': 'anastasia@flavorhub.com', 'country': 'Ukraine'},
             {'username': 'RajeshPatel', 'email': 'rajesh@flavorhub.com', 'country': 'Pakistan'},
+            # Original countries
+            {'username': 'WanjiruKamau', 'email': 'wanjiru@flavorhub.com', 'country': 'Kenya'},
+            {'username': 'AbebeTesfaye', 'email': 'abebe@flavorhub.com', 'country': 'Ethiopia'},
+            {'username': 'AdaoraOkafor', 'email': 'adaora@flavorhub.com', 'country': 'Nigeria'},
+            {'username': 'GiovanniRossi', 'email': 'giovanni@flavorhub.com', 'country': 'Italy'},
+            {'username': 'SomchaiPatel', 'email': 'somchai@flavorhub.com', 'country': 'Thailand'},
+            {'username': 'PriyaSharma', 'email': 'priya@flavorhub.com', 'country': 'India'},
+            {'username': 'CarlosHernandez', 'email': 'carlos@flavorhub.com', 'country': 'Mexico'},
+            {'username': 'FatimaKhoury', 'email': 'fatima@flavorhub.com', 'country': 'Lebanon'},
+            {'username': 'ThandoMokoena', 'email': 'thando@flavorhub.com', 'country': 'South Africa'},
+            {'username': 'AminaBenali', 'email': 'amina@flavorhub.com', 'country': 'Morocco'},
         ]
         
         users = {}
@@ -57,6 +69,17 @@ def seed_recipes():
             {'title': 'Kedjenou', 'description': 'Ivorian slow-cooked chicken stew', 'ingredients': '1 chicken\n3 tomatoes\n2 eggplants', 'instructions': '1. Layer ingredients\n2. Cook slowly\n3. Shake pot', 'prep_time': 20, 'cook_time': 90, 'servings': 4, 'country': 'Ivory Coast', 'image_url': 'https://images.unsplash.com/photo-1598103442097-8b74394b95c6?w=600', 'user_id': users['Ivory Coast'].id},
             {'title': 'Borscht', 'description': 'Ukrainian beet soup', 'ingredients': '4 beets\n2 potatoes\n400g cabbage', 'instructions': '1. Grate beets\n2. Simmer\n3. Add sour cream', 'prep_time': 20, 'cook_time': 45, 'servings': 6, 'country': 'Ukraine', 'image_url': 'https://images.unsplash.com/photo-1604908815453-e9d1b0a6e4f7?w=600', 'user_id': users['Ukraine'].id},
             {'title': 'Nihari', 'description': 'Pakistani slow-cooked beef stew', 'ingredients': '1kg beef shank\n2 onions\nNihari masala', 'instructions': '1. Brown onions\n2. Add beef\n3. Simmer 4 hours', 'prep_time': 20, 'cook_time': 240, 'servings': 6, 'country': 'Pakistan', 'image_url': 'https://images.unsplash.com/photo-1585937421612-70e008356f33?w=600', 'user_id': users['Pakistan'].id},
+            # Original countries
+            {'title': 'Ugali with Sukuma Wiki', 'description': 'Kenyan staple with cornmeal and collard greens', 'ingredients': '2 cups cornmeal\n4 cups water\nCollard greens\nTomatoes\nOnions', 'instructions': '1. Boil water\n2. Add cornmeal\n3. Stir until thick\n4. Sauté greens', 'prep_time': 10, 'cook_time': 20, 'servings': 4, 'country': 'Kenya', 'image_url': 'https://images.unsplash.com/photo-1604329760661-e71dc83f8f26?w=600', 'user_id': users['Kenya'].id},
+            {'title': 'Injera with Doro Wat', 'description': 'Ethiopian spongy bread with spicy chicken stew', 'ingredients': 'Teff flour\nChicken\nBerbere spice\nOnions\nGarlic', 'instructions': '1. Ferment teff batter\n2. Cook injera\n3. Make doro wat\n4. Serve together', 'prep_time': 30, 'cook_time': 60, 'servings': 6, 'country': 'Ethiopia', 'image_url': 'https://images.unsplash.com/photo-1604329760661-e71dc83f8f26?w=600', 'user_id': users['Ethiopia'].id},
+            {'title': 'Egusi Soup', 'description': 'Nigerian melon seed soup with vegetables', 'ingredients': 'Egusi seeds\nPalm oil\nMeat\nStockfish\nVegetables', 'instructions': '1. Grind egusi\n2. Cook meat\n3. Add egusi\n4. Add vegetables', 'prep_time': 20, 'cook_time': 45, 'servings': 6, 'country': 'Nigeria', 'image_url': 'https://images.unsplash.com/photo-1604329760661-e71dc83f8f26?w=600', 'user_id': users['Nigeria'].id},
+            {'title': 'Spaghetti Carbonara', 'description': 'Italian pasta with eggs, cheese, and pancetta', 'ingredients': 'Spaghetti\nEggs\nPancetta\nPecorino cheese\nBlack pepper', 'instructions': '1. Cook pasta\n2. Fry pancetta\n3. Mix eggs and cheese\n4. Combine all', 'prep_time': 10, 'cook_time': 15, 'servings': 4, 'country': 'Italy', 'image_url': 'https://images.unsplash.com/photo-1612874742237-6526221588e3?w=600', 'user_id': users['Italy'].id},
+            {'title': 'Pad Thai', 'description': 'Thai stir-fried noodles with tamarind sauce', 'ingredients': 'Rice noodles\nShrimp\nEggs\nTamarind\nPeanuts\nBean sprouts', 'instructions': '1. Soak noodles\n2. Make sauce\n3. Stir-fry\n4. Add toppings', 'prep_time': 15, 'cook_time': 10, 'servings': 2, 'country': 'Thailand', 'image_url': 'https://images.unsplash.com/photo-1559314809-0d155014e29e?w=600', 'user_id': users['Thailand'].id},
+            {'title': 'Chicken Biryani', 'description': 'Indian spiced rice with chicken', 'ingredients': 'Basmati rice\nChicken\nYogurt\nSaffron\nSpices', 'instructions': '1. Marinate chicken\n2. Cook rice\n3. Layer\n4. Steam', 'prep_time': 30, 'cook_time': 45, 'servings': 6, 'country': 'India', 'image_url': 'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=600', 'user_id': users['India'].id},
+            {'title': 'Tacos al Pastor', 'description': 'Mexican pork tacos with pineapple', 'ingredients': 'Pork\nPineapple\nChilies\nCorn tortillas\nCilantro\nOnions', 'instructions': '1. Marinate pork\n2. Grill\n3. Slice\n4. Serve in tortillas', 'prep_time': 120, 'cook_time': 20, 'servings': 4, 'country': 'Mexico', 'image_url': 'https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=600', 'user_id': users['Mexico'].id},
+            {'title': 'Shawarma', 'description': 'Lebanese spiced meat wrap', 'ingredients': 'Chicken\nGarlic sauce\nPickles\nPita bread\nSpices', 'instructions': '1. Marinate chicken\n2. Grill\n3. Slice\n4. Wrap in pita', 'prep_time': 60, 'cook_time': 15, 'servings': 4, 'country': 'Lebanon', 'image_url': 'https://images.unsplash.com/photo-1529006557810-274b9b2fc783?w=600', 'user_id': users['Lebanon'].id},
+            {'title': 'Bobotie', 'description': 'South African spiced meat casserole', 'ingredients': 'Ground beef\nCurry powder\nEggs\nMilk\nRaisins\nBread', 'instructions': '1. Cook meat with spices\n2. Add to dish\n3. Top with egg custard\n4. Bake', 'prep_time': 20, 'cook_time': 40, 'servings': 6, 'country': 'South Africa', 'image_url': 'https://images.unsplash.com/photo-1604329760661-e71dc83f8f26?w=600', 'user_id': users['South Africa'].id},
+            {'title': 'Chicken Tagine', 'description': 'Moroccan slow-cooked stew with preserved lemons', 'ingredients': 'Chicken\nPreserved lemons\nOlives\nSpices\nOnions', 'instructions': '1. Brown chicken\n2. Add spices\n3. Add lemons and olives\n4. Simmer', 'prep_time': 15, 'cook_time': 60, 'servings': 4, 'country': 'Morocco', 'image_url': 'https://images.unsplash.com/photo-1598103442097-8b74394b95c6?w=600', 'user_id': users['Morocco'].id},
         ]
         
         for recipe_data in new_recipes:
