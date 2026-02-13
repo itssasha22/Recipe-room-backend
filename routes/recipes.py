@@ -8,54 +8,41 @@ recipes_bp = Blueprint('recipes', __name__)
 
 @recipes_bp.route('', methods=['GET'])
 def get_recipes():
-    try:
-        # Get query parameters for search and filtering
-        search = request.args.get('search', '').strip()
-        country = request.args.get('country', '').strip()
-        min_rating = request.args.get('min_rating', type=float)
-        max_servings = request.args.get('max_servings', type=int)
-        ingredient = request.args.get('ingredient', '').strip()
-        sort_by = request.args.get('sort_by', 'created_at')  # created_at, rating, title
-        
-        query = Recipe.query
-        
-        # Search by name
-        if search:
-            query = query.filter(Recipe.title.ilike(f'%{search}%'))
-        
-        # Filter by country
-        if country:
-            query = query.filter(Recipe.country.ilike(f'%{country}%'))
-        
-        # Filter by servings
-        if max_servings:
-            query = query.filter(Recipe.servings <= max_servings)
-        
-        # Filter by ingredient (search in ingredients field)
-        if ingredient:
-            query = query.filter(Recipe.ingredients.ilike(f'%{ingredient}%'))
-        
-        # Get all matching recipes
-        recipes = query.all()
-        
-        # Convert to dict with stats
-        recipes_data = [recipe.to_dict(include_stats=True) for recipe in recipes]
-        
-        # Filter by minimum rating (done after conversion since rating is calculated)
-        if min_rating:
-            recipes_data = [r for r in recipes_data if r['avg_rating'] >= min_rating]
-        
-        # Sort recipes
-        if sort_by == 'rating':
-            recipes_data.sort(key=lambda x: x['avg_rating'], reverse=True)
-        elif sort_by == 'title':
-            recipes_data.sort(key=lambda x: x['title'])
-        else:  # created_at
-            recipes_data.sort(key=lambda x: x['created_at'], reverse=True)
-        
-        return jsonify(recipes_data), 200
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
+    search = request.args.get('search', '').strip()
+    country = request.args.get('country', '').strip()
+    min_rating = request.args.get('min_rating', type=float)
+    max_servings = request.args.get('max_servings', type=int)
+    ingredient = request.args.get('ingredient', '').strip()
+    sort_by = request.args.get('sort_by', 'created_at')
+    
+    query = Recipe.query
+    
+    if search:
+        query = query.filter(Recipe.title.ilike(f'%{search}%'))
+    
+    if country:
+        query = query.filter(Recipe.country.ilike(f'%{country}%'))
+    
+    if max_servings:
+        query = query.filter(Recipe.servings <= max_servings)
+    
+    if ingredient:
+        query = query.filter(Recipe.ingredients.ilike(f'%{ingredient}%'))
+    
+    recipes = query.all()
+    recipes_data = [recipe.to_dict(include_stats=True) for recipe in recipes]
+    
+    if min_rating:
+        recipes_data = [r for r in recipes_data if r['avg_rating'] >= min_rating]
+    
+    if sort_by == 'rating':
+        recipes_data.sort(key=lambda x: x['avg_rating'], reverse=True)
+    elif sort_by == 'title':
+        recipes_data.sort(key=lambda x: x['title'])
+    else:
+        recipes_data.sort(key=lambda x: x['created_at'], reverse=True)
+    
+    return jsonify(recipes_data), 200
 
 @recipes_bp.route('', methods=['POST'])
 @jwt_required()
