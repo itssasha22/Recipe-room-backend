@@ -14,11 +14,7 @@ app.config.from_object('config.Config')
 db.init_app(app)
 migrate = Migrate(app, db)
 jwt = JWTManager(app)
-CORS(app, resources={r"/api/*": {"origins": [
-    "http://localhost:5173",
-    "http://localhost:3000",
-    "https://recipe-room-frontend.vercel.app"
-]}})
+CORS(app)
 
 from models import User, Recipe, Group, Bookmark, Rating, Comment, GroupInvitation
 
@@ -40,8 +36,11 @@ app.register_blueprint(bookmarks_bp, url_prefix='/api/bookmarks')
 
 # Auto-initialize database on startup
 with app.app_context():
-    db.create_all()
-    print("Database tables created successfully")
+    try:
+        db.create_all()
+        print("Database tables created successfully")
+    except Exception as e:
+        print(f"Database initialization error: {e}")
 
 if __name__ == '__main__':
     app.run(debug=True)
